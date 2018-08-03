@@ -4,7 +4,7 @@ import { DataProvider } from '../../providers/data/data';
 
 
 /**
- * Generated class for the HomePage page.
+ * Generated class for the SettingsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,40 +12,51 @@ import { DataProvider } from '../../providers/data/data';
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+  selector: 'page-settings',
+  templateUrl: 'settings.html',
 })
-export class HomePage {
+export class SettingsPage {
 
+  doRefresh(refresher) {
+
+    console.log('Begin async operation', refresher);
+
+    this.data.getData(this.place).subscribe(dataInfo=>{
+      this.info= dataInfo;
+    })
+    
+  
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
+  }
+  
   info;
   infoList;
-  place="pretoria";
+  place ="pretoria";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private data:DataProvider ) {
-    // this.data.getData().subscribe(data=>{
 
-    //   this.info = data;
-    //   console.log(this.info);
-  
-    //   this.infoList = this.info.data;
-    //  })
-
+    
     this.data.getData(this.place).subscribe(dataInfo =>{
       console.log(dataInfo)
       this.infoList=dataInfo
     })
-
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    console.log('ionViewDidLoad SettingsPage');
   }
 
-  changeMethod(){
+  onInput(){
     console.log(this.place);
     this.data.getData(this.place).subscribe(dataInfo=>{
-      this. info= dataInfo;
+      this.info= dataInfo;
     })
   }
+
+  
 
 }
